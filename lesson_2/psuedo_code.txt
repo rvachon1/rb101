@@ -1,0 +1,59 @@
+1. A method that retuns the sum of two integers
+
+Ask for two integers
+sum the integers
+print the sum
+
+START
+
+GET two integers
+
+SET num1 = first integer
+SET num2 = second integer
+
+SET sum = num1 + num2
+
+PRINT sum
+
+END
+
+2. A method that takes an array of strings, and returns a string that is all those strings concatenated together.
+
+Given an array of strings call string_array
+
+Iterate over the entire array of strings
+Concatenate each string with the next string until all strings are concatenated
+
+START
+
+SET master_string = ""
+SET iterator = 0
+
+WHILE  iterator < string_array.length
+  SET master_string = master_string + string_array.first
+  set iterator += 1
+
+PRINT master_string
+
+END
+
+3. A method that takes an array of integers, and returns a new array with every other element.
+
+*Given an array of integers called integers*
+
+Iterate over the entire array
+Store every OTHER integer in a new array
+Print the new array
+
+START
+
+SET other_array = []
+SET iterator = 0
+
+WHILE iterator < integers.length
+  IF iterator % 2 == 0
+    SET other_array = other_array << integer
+  ELSE
+    NEXT
+
+PRINT other_array

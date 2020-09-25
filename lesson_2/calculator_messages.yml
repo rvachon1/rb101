@@ -1,0 +1,50 @@
+which_language: "
+    What language did you want to use? Quelle langue vouliez-vous utiliser?
+    '1' - English
+    '2' - Français"
+welcome: 
+  en: "Welcome to Calculator! Enter your name:"
+  fr: "Bienvenue dans Calculator! Entrez votre nom:"
+hello:
+  en: "Hello,"
+  fr: "Bonjour,"
+valid_name: 
+  en: "Make sure to enter a valid name."
+  fr: "Assurez-vous de saisir un nom valide."
+num1_msg: 
+  en: "Please enter your first number:"
+  fr: "Veuillez saisir votre premier numéro:"
+num2_msg: 
+  en: "Please enter your second number:"
+  fr: "Veuillez saisir votre deuxième numéro:"
+input_prompt:
+  en: "
+    What oppoeration would you like to perform?
+    '1' - Addition
+    '2' - Subtraction
+    '3' - Multiplication
+    '4' - Division"
+  fr: "Quelle opération souhaitez-vous effectuer?
+    '1' - Addition
+    '2' - Soustraction
+    '3' - Multiplication
+    '4' - Division"
+result:
+  en: "Your result is"
+  fr: "Votre résultat est"
+another?:
+  en: "Do you want to perform another calculation? (Y/N)"
+  fr: "Voulez-vous effectuer un autre calcul? (Y/N)"
+goodbye:
+  en: "Thank you for using the Calculator. Good bye!"
+  fr: "Merci d'utiliser la calculatrice. Au revoir!"
+calc_prompt:
+  en: "the two numbers..."
+  fr: "les deux nombres..."
+
+invalid_entry:
+  en: "Invalid entry. Try again!"
+  fr: "Entrée invalide. Réessayer!"
+invalid_num_selection: 
+  en: "Invalid selection. Must choose 1, 2, 3, or 4!"
+  fr: "Selection invalide. Doit choisir 1, 2, 3 ou 4!"
