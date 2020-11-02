@@ -1,3 +1,6 @@
+require "pry"
+require "pry-byebug"
+
 WINNING_COMBINATIONS = [
   [1, 2, 3],
   [4, 5, 6],
@@ -55,11 +58,43 @@ def request_users_move!(board)
   board[users_move.to_i - 1] = "X"
 end
 
+def immediate_thread(board, symbol)
+  threat = false
+  threat_state = []
+  threat_move = nil
+  other_symbol = nil
+  symbol == "O" ? other_symbol = "X" : other_symbol = "O"
+
+  WINNING_COMBINATIONS.detect do |combination|
+    threat_state = [board[combination[0] - 1], board[combination[1] - 1],
+                    board[combination[2] - 1]]
+    (threat_state.count(symbol) == 2) && (threat_state.count(other_symbol) == 0)
+  end
+  if (threat_state.count(symbol) == 2) && (threat_state.count(other_symbol) == 0)
+    threat = true
+    threat_move = threat_state.select { |i| i != symbol}[0]
+  end
+  [threat, threat_move]
+end
+
 def computers_move!(board)
-  comp_move = board
-              .select { |i| i.is_a?(Integer) }
-              .sample
-  board[comp_move - 1] = "O"
+  threat, comp_move = immediate_thread(board, "O") # is O a threat?
+  if threat
+    board[comp_move - 1] = "O"
+  else
+    threat, comp_move = immediate_thread(board, "X") # is X a threat?
+    if threat
+      board[comp_move - 1] = "O"
+    elsif (board[4] != "X") && (board[4] != "O")
+      comp_move = "5"
+      board[4] = "O"
+    else
+      comp_move = board
+                  .select { |i| i.is_a?(Integer) }
+                  .sample
+      board[comp_move - 1] = "O"
+    end
+  end
   prompt("Computer chooses: #{comp_move}!")
 end
 
@@ -86,26 +121,33 @@ def board_checker(board)
   end
 end
 
-def who_won(board)
+def who_won(board, option = "y")
   case board_checker(board)
   when "X"
-    display_board(board)
-    prompt("CONGRATULATIONS, YOU WON!")
+    display_board(board) if option == "y"
+    prompt("CONGRATULATIONS, YOU WON!") if option == "y"
     "X"
   when "O"
-    display_board(board)
-    prompt("Game over. You LOSE!")
+    display_board(board) if option == "y"
+    prompt("Game over. You LOSE!") if option == "y"
     "O"
   when "draw"
-    display_board(board)
-    prompt("IT'S A DRAW!")
+    display_board(board) if option == "y"
+    prompt("IT'S A DRAW!") if option == "y"
     "draw"
   end
 end
 
 ########## Start the game ##########
+
+score_hash = {
+  player: 0,
+  computer: 0
+}
+
 loop do
   loop do
+    puts("\n===========================NEW GAME=================================\n\n")
     prompt("Let's play Rock, Paper, Scissors!")
     prompt("Who do you want to go first? Press M for Me or C for Computer!")
     who_first = gets.chomp
@@ -136,20 +178,28 @@ loop do
     loop do
       computers_move!(game_board)
       display_board(game_board)
-      break if !who_won(game_board).nil?
+      break if !who_won(game_board, "n").nil?
       request_users_move!(game_board)
       break if !who_won(game_board).nil?
     end
   else
     prompt("Invalid entry. Goodbye!")
   end
+  
+  winner = who_won(game_board, "n")
+  case winner
+  when "X" then score_hash[:player] += 1
+  when "O" then score_hash[:computer] += 1
+  else
+  end
+  prompt("The score is now Player: #{score_hash[:player]} - Computer: #{score_hash[:computer]}")
 
   play_again = ""
   loop do
     prompt("Do you want to play again? (Y/N)")
-    play_again = gets.chomp
-    break if play_again.downcase == "n" || play_again == "y"
+    play_again = gets.chomp.downcase
+    break if play_again == "n" || play_again == "y"
     prompt("Invalid entry")
   end
-  break if play_again.downcase == "n"
+  break if play_again == "n"
 end
